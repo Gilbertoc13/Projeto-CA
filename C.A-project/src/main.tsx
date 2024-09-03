@@ -5,18 +5,16 @@ import Login from './pages/Login/login';
 import './index.css';
 import About from './pages/About/about';
 import Home from './pages/Home/home';
-import Footer from './components/Footer/footer';
 import Cadastro from './pages/Cadastro/cadastro'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Router>
       <Routes>
-        <Route path="/footer" element={<Footer />} />
-        <Route path="/Home" element={<Home />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path='/Cadastro'element={<Cadastro />} />
-        <Route path='/About'element={<About />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path='/cadastro'element={<Cadastro />} />
+        <Route path='/about'element={<About />} />
         
       </Routes>
     </Router>
