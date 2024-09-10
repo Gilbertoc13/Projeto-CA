@@ -1,57 +1,84 @@
-import './style.css';
-import GoogleIcon from '../../assets/icons8-google-logo.svg';
-import Logo from '../../assets/Logo.svg';
+import { useState } from "react";
+import Footer from "../../components/Footer/footer";
 import Header from '../../components/header/header';
-import Footer from '../../components/Footer/footer';
-import api from '../../services/api'
-import { useRef } from 'react';
+import logo from "../../assets/Logo.svg";
+import google from '../../assets/icons8-google-logo.svg';
+import api from '../../services/api';
+import "./login.css";
 
 function Login() {
-  const inputEmail = useRef<HTMLInputElement>(null);
-  const inputPassword = useRef<HTMLInputElement>(null);
 
-  async function handleLogin() {
-    if (inputEmail.current && inputPassword.current) {
-      const email = inputEmail.current.value;
-      const password = inputPassword.current.value;
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-      try {
-        const response = await api.post('/login', {
-          email: email,
-          password: password
-        });
+    async function handleLogin() {
+        if (!email || !password) {
+            alert('Por favor, preencha todos os campos.');
+            return;
+        }
 
-        console.log('Resposta da API:', response.data);
-      } catch (error) {
-        console.error('Erro ao tentar fazer login:', error);
+        try {
+            const response = await api.post('/api/login', {
+                email,
+                password
+            });
 
-      }
+            console.log('Resposta da API:', response.data);
+            alert('Login realizado com sucesso!');
+
+        } catch (error) {
+            if (error instanceof Error) {
+
+                console.error('Erro ao tentar fazer login:', error.message);
+                alert('Erro ao tentar fazer login: ' + error.message);
+            } else {
+                console.error('Erro desconhecido:', error);
+                alert('Erro desconhecido ao tentar fazer login.');
+            }
+        }
     }
-  }
 
-  return (
-    <>
-      <Header />
-      <div className='login-container'>
-        <div className='logo-'>
-          <img src={Logo} alt="logo" className='logo-img' />
-        </div>
-        <form className='Login'>
-          <h1>Entrar</h1>
-          <input id='email' placeholder="Digite seu email" type='text' ref={inputEmail} />
-          <input id='senha' placeholder="Digite sua senha" type='password' ref={inputPassword} />
-          <a href="#">Esqueceu a senha?</a>
-          <button id="acessar" type='button' onClick={handleLogin}>Acessar</button>
-          <h2>ou</h2>
-          <button id="google" type="button">
-            <img src={GoogleIcon} alt="Google" className="logo-google" />Entrar com o Google
-          </button>
-          <p>Ainda não possui uma conta? <a href="/Cadastro">Cadastre-se</a></p>
-        </form>
-      </div>
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <Header />
+            <div className='login-container'>
+                <div className='logo-'>
+                    <img src={logo} alt="logo" className='logo-img' />
+                </div>
+                <form className='Login'>
+                    <h1>Entrar</h1>
+                    <input 
+                        id='email' 
+                        placeholder="Digite seu email" 
+                        type='text' 
+                        value={email} 
+                        onChange={e => setEmail(e.target.value)} 
+                    />
+                    <input 
+                        id='senha' 
+                        placeholder="Digite sua senha" 
+                        type='password' 
+                        value={password} 
+                        onChange={e => setPassword(e.target.value)} 
+                    />
+                    <a href="#">Esqueceu a senha?</a>
+                    <button 
+                        id="acessar" 
+                        type='button' 
+                        onClick={handleLogin}
+                    >
+                        Acessar
+                    </button>
+                    <h2>ou</h2>
+                    <button id="google" type="button">
+                        <img src={google} alt="Google" className="logo-google" />Entrar com o Google
+                    </button>
+                    <p>Ainda não possui uma conta? <a href="/cadastro">Cadastre-se</a></p>
+                </form>
+            </div>
+            <Footer />
+        </>
+    );
 }
 
 export default Login;

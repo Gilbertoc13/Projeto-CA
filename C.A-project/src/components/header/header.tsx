@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import './style.css'
+import './header.css'
 
 function Header() {
     const [isOpen, setIsOpen] = useState(false);
@@ -13,7 +13,6 @@ function Header() {
       <header className="header">
         <nav>
           <ul className={`menu ${isOpen ? 'show' : 'hide'}`}>
-            <li><Link to="/Home">Home</Link></li>
             <li><Link to="/about">About</Link></li>
             <li><Link to="/contact">Contact</Link></li>
           </ul>
@@ -25,8 +24,8 @@ function Header() {
         </div>
         <nav>
           <ul className="acess">
-            <li><Link to="/Cadastro">Cadastro</Link></li>
-            <li><Link to="/Login">Login</Link></li>
+            <li><Link to="/cadastro">Cadastro</Link></li>
+            <li><Link to="/login">Login</Link></li>
           </ul>
         </nav>
 

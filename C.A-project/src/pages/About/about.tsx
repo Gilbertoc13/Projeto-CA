@@ -1,6 +1,6 @@
 import Header from '../../components/header/header';
 import Footer from '../../components/Footer/footer';
-import './style.css'
+import './about.css'
 
 function About() {
   return (
