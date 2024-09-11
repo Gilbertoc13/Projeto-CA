@@ -3,31 +3,31 @@ import Footer from "../../components/Footer/footer";
 import Header from '../../components/header/header'
 import logo from "../../assets/Logo.svg";
 import google from '../../assets/icons8-google-logo.svg'
-import api from '../../services/api'
+import {api} from '../../services/api';
 import "./cadastro.css"
 
 function Cadastro() {
 
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [birthdate, setBirthdate] = useState('');
 
     async function createUsers() {
-        if (!name || !email || !password || !birthdate) {
+        if (!username || !email || !password || !birthdate) {
             alert('Por favor, preencha todos os campos.');
             return;
         }
 
         try {
             const response = await api.post('/api/cadastro', {
-                name,
+                username,
                 email,
                 password,
                 birthdate,
             });
 
-            console.log('Usuário cadastrado com sucesso:', response.data);
+            console.log(response.data);
             alert('Usuário cadastrado com sucesso!');
 
         } catch (error) {
@@ -68,8 +68,8 @@ function Cadastro() {
                             id='user' 
                             placeholder="Digite seu username" 
                             type='text' 
-                            value={name} 
-                            onChange={e => setName(e.target.value)} 
+                            value={username} 
+                            onChange={e => setUsername(e.target.value)} 
                         />
                         <input 
                             id='email' 

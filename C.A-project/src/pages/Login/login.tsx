@@ -3,32 +3,36 @@ import Footer from "../../components/Footer/footer";
 import Header from '../../components/header/header';
 import logo from "../../assets/Logo.svg";
 import google from '../../assets/icons8-google-logo.svg';
-import api from '../../services/api';
+import {api} from '../../services/api';
 import "./login.css";
 
 function Login() {
 
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     async function handleLogin() {
-        if (!email || !password) {
+        if (!username || !password) {
             alert('Por favor, preencha todos os campos.');
             return;
         }
 
         try {
-            const response = await api.post('/api/login', {
-                email,
+            const response = await api.post('/api/login', { 
+                username,
                 password
             });
 
-            console.log('Resposta da API:', response.data);
+            const { token } = response.data;
+
+            localStorage.setItem('token', token);
+
+            console.log('Login realizado com sucesso:', response.data);
             alert('Login realizado com sucesso!');
+            
 
         } catch (error) {
             if (error instanceof Error) {
-
                 console.error('Erro ao tentar fazer login:', error.message);
                 alert('Erro ao tentar fazer login: ' + error.message);
             } else {
@@ -37,7 +41,6 @@ function Login() {
             }
         }
     }
-
     return (
         <>
             <Header />
@@ -48,11 +51,11 @@ function Login() {
                 <form className='Login'>
                     <h1>Entrar</h1>
                     <input 
-                        id='email' 
-                        placeholder="Digite seu email" 
+                        id='user' 
+                        placeholder="Digite seu username" 
                         type='text' 
-                        value={email} 
-                        onChange={e => setEmail(e.target.value)} 
+                        value={username} 
+                        onChange={e => setUsername(e.target.value)} 
                     />
                     <input 
                         id='senha' 
